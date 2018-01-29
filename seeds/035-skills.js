@@ -10,5 +10,8 @@ exports.seed = (knex, Promise) =>
         {name: 'IoT'},
         {name: 'Bots'},
         {name: 'AI/ML'},
-        {name: 'Tensorflow'}
+        {name: 'Tensorflow'},
+        {name: 'Websockets'},
+        {name: 'WebRTC'},
+        {name: 'Azure'}
       ])
