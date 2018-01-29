@@ -1,0 +1,91 @@
+scalar Date
+
+"""
+Object Type Definition
+"""
+
+type Technology {
+  id: ID!
+  name: String
+  projects: [Project]
+}
+
+type Project {
+  id: ID!
+  name: String!
+  description: String
+  students: [Student]
+  hackathon: Hackathon
+}
+
+type Student {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  project: Project
+}
+
+type Azurecode {
+  id: ID!
+  code: String!
+  expires_on: Date
+  project: Project
+  hackathon: Hackathon
+}
+
+type Hackathon {
+  id: ID!
+  name: String
+  description: String
+  start_date: Date
+  end_date: Date
+  bot_deployed: Boolean
+  mentors: [Mentor]
+  projects: [Project]
+  students: [Student]
+}
+
+type Mentor {
+  id: ID!
+  first_name: String
+  last_name: String
+  email: String
+  phone: String
+  is_availabe: Boolean
+  skills: [Skill]
+  hackathons: [Hackathon]
+}
+
+type Inquiry {
+  id: ID!
+  question: String
+  mentor_notes: String
+  is_resolved: Boolean
+  student: Student
+  mentor: Mentor,
+  skill: Skill
+}
+
+type Skill {
+  id: ID!
+  name: String
+  mentors: [Mentor],
+  inquiries: [Inquiry]
+}
+
+"""
+Object Type Definition
+"""
+
+type Query {
+  project(id: ID!): Project
+  hackathons: [Hackathon]
+  hackathon(id: ID!): Hackathon
+  mentor(id: ID!): Mentor
+  inquiry(id: ID!): Inquiry
+  skill(id: ID!): Skill
+  technology(id: ID!): Technology
+  azurecode(id: ID!): Azurecode
+  student(id: ID!): Student
+}
