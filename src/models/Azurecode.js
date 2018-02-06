@@ -1,5 +1,12 @@
 const Model = require('../../bootstrap/dbModel')
 
+/**
+ * Azure code model
+ *
+ * @class Azurecode
+ * @extends {Model}
+ */
+
 class Azurecode extends Model {
   static get tableName () {
     return 'azurecodes'
