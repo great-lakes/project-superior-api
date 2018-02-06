@@ -2,8 +2,9 @@ var knex = require('knex')({
   client: process.env.DB_SYSTEM,
   connection: process.env.DB_CONNECTION_STRING
 })
-const Bookshelf = require('bookshelf')(knex)
 
-Bookshelf.plugin('registry')
+const {Model} = require('objection')
 
-module.exports = Bookshelf
+Model.knex(knex)
+
+module.exports = Model
