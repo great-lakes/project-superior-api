@@ -3,7 +3,7 @@ exports.up = (knex, Promise) =>
     table.increments('id')
     table.string('code')
     table.date('expires_on')
-    table.boolean('is_taken')
+    table.boolean('is_taken').defaultTo(false)
     table.integer('student_id')
       .unsigned().index().nullable()
       .references('id').inTable('students')

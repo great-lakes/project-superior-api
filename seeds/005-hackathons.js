@@ -3,6 +3,7 @@ exports.seed = (knex, Promise) =>
   knex(dbName).insert([
     {
       name: 'HackIllinois 2018',
+      slug: 'uiuc2018',
       description: 'The hackathon that takes place in Urbana, IL at University of Illinois Campus',
       start_date: '2018-02-23',
       end_date: '2018-02-25',
@@ -10,6 +11,7 @@ exports.seed = (knex, Promise) =>
     },
     {
       name: 'MHacks 2018',
+      slug: 'mhacks2018',
       description: 'The hackathon that takes place in University of Michigan.',
       start_date: '2018-09-20',
       end_date: '2018-09-23',

@@ -3,7 +3,7 @@ exports.up = (knex, Promise) =>
     table.increments('id')
     table.text('question')
     table.text('mentor_notes')
-    table.boolean('is_resolved')
+    table.boolean('is_resolved').defaultTo(false)
     table.timestamps()
     table.integer('student_id')
       .unsigned().index().nullable()

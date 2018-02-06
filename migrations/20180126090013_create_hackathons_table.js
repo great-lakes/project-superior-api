@@ -3,6 +3,7 @@ exports.up = (knex, Promise) =>
   knex.schema.createTable('hackathons', (table) => {
     table.increments('id')
     table.string('name')
+    table.string('slug').unique()
     table.string('description')
     table.date('start_date')
     table.date('end_date')
