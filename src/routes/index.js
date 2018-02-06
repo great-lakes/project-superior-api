@@ -1,7 +1,7 @@
 const { graphiqlRestify } = require('apollo-server-restify')
 const schema = require('../graphql/schema')
 const {graphql} = require('graphql')
-const rootResolver = require('../graphql/resolvers')
+const rootResolver = require('../resolvers')
 const fs = require('fs')
 
 module.exports = (server) => {
@@ -10,7 +10,12 @@ module.exports = (server) => {
   }
 
   server.post('/graphql', (req, res, next) => {
-    graphql(schema, req.body.query, rootResolver).then((response) => {
+    graphql({
+      schema,
+      source: req.body.query,
+      rootValue: rootResolver
+      // contextValue: {loaders}
+    }).then((response) => {
       res.json(response)
     })
   })

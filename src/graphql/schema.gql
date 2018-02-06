@@ -23,27 +23,33 @@ type Student {
   name: String
   email: String
   phone: String
+  azurecode: Azurecode
   project: Project
+  inquiries: [Inquiry]
 }
 
 type Azurecode {
   id: ID!
   code: String!
   expires_on: Date
-  project: Project
+  is_taken: Boolean
+  student: Student
   hackathon: Hackathon
 }
 
 type Hackathon {
   id: ID!
   name: String
+  slug: String
   description: String
   start_date: Date
   end_date: Date
   bot_deployed: Boolean
+  azurecodes: [Azurecode]
   mentors: [Mentor]
   projects: [Project]
-  students: [Student]
+  # students: [Student]
+  # inquiries: [Inquiry]
 }
 
 type Mentor {

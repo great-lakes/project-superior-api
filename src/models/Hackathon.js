@@ -1,15 +1,46 @@
-const bookshelf = require('../../bootstrap/bookshelf')
+const Model = require('../../bootstrap/dbModel')
 
-module.exports = bookshelf.model('Hackathon', {
-  tableName: 'hackathons',
-  relations: ['projects', 'azurecodes', 'students'],
-  projects: function () {
-    return this.hasMany('Project')
-  },
-  azurecodes: function () {
-    return this.hasMany('Azurecodes')
-  },
-  students: function () {
-    return this.hasMany('Student').through('Project')
+class Hackathon extends Model {
+  static get tableName () {
+    return 'hackathons'
   }
-})
+
+  projects () {
+    const { project } = require('../loaders')
+    return this.$relatedQuery('projects').then((projects) => {
+      return project.loadMany(projects.map((project) => project.id))
+    })
+  }
+
+  azurecodes () {
+    const { azurecodes } = require('../loaders')
+    return azurecodes.loadMany()
+  }
+
+  static get relationMappings () {
+    // Import models here to prevent require loops.
+    const Azurecode = require('./Azurecode')
+    const Project = require('./Project')
+
+    return {
+      azurecodes: {
+        relation: Model.HasManyRelation,
+        modelClass: Azurecode,
+        join: {
+          from: 'hackathons.id',
+          to: 'azurecodes.hackathon_id'
+        }
+      },
+      projects: {
+        relation: Model.HasManyRelation,
+        modelClass: Project,
+        join: {
+          from: 'hackathons.id',
+          to: 'projects.hackathon_id'
+        }
+      }
+    }
+  }
+}
+
+module.exports = Hackathon
