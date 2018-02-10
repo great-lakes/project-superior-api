@@ -10,11 +10,14 @@ module.exports = (server) => {
   }
 
   server.post('/graphql', (req, res, next) => {
+    if (req.query.access_token !== process.env.GRAPHQL_ACCESS_TOKEN) {
+      return res.json({message: 'Not Authorized'})
+    }
+
     graphql({
       schema,
       source: req.body.query,
       rootValue: rootResolver
-      // contextValue: {loaders}
     }).then((response) => {
       res.json(response)
     })
