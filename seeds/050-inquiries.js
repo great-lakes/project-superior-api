@@ -50,7 +50,7 @@ exports.seed = (knex, Promise) =>
           question: 'My Xamarin app does not compile',
           mentor_notes: null,
           is_resolved: false,
-          student_id: 3,
+          student_id: 7,
           mentor_id: null,
           skill_id: 3,
           created_at: new Date().toISOString(),

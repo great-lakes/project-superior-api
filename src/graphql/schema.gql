@@ -1,5 +1,10 @@
 scalar Date
 
+enum InquiryStatus {
+  UNRESOLVED
+  RESOLVED  
+}
+
 """
 Object Type Definition
 """
@@ -16,6 +21,7 @@ type Project {
   description: String
   students: [Student]
   hackathon: Hackathon
+  technologies: [Technology]
 }
 
 type Student {
@@ -48,8 +54,7 @@ type Hackathon {
   azurecodes: [Azurecode]
   mentors: [Mentor]
   projects: [Project]
-  # students: [Student]
-  # inquiries: [Inquiry]
+  inquiries: [Inquiry]
 }
 
 type Mentor {
@@ -58,6 +63,7 @@ type Mentor {
   last_name: String
   email: String
   phone: String
+  bio: String
   is_availabe: Boolean
   skills: [Skill]
   hackathons: [Hackathon]
@@ -69,7 +75,7 @@ type Inquiry {
   mentor_notes: String
   is_resolved: Boolean
   student: Student
-  mentor: Mentor,
+  mentor: Mentor
   skill: Skill
 }
 
@@ -81,7 +87,7 @@ type Skill {
 }
 
 """
-Object Type Definition
+Query Type Definition
 """
 
 type Query {
@@ -94,4 +100,15 @@ type Query {
   technology(id: ID!): Technology
   azurecode(id: ID!): Azurecode
   student(id: ID!): Student
+}
+
+type Mutation {
+  setInquiryStatus(id: ID!, status: InquiryStatus!): Inquiry
+  setInquiryNotes(id: ID!, notes: String): Inquiry
+  setInquiryMentor(inquiryId: ID!, mentorId: ID!): Inquiry
+  takeAzurecode(id: ID!): Azurecode
+  takeOneAzurecode(hackathonId: ID!): Azurecode
+  # createStudent(name: String!, email: String!, phone: String): Student
+  # createProject(name: String!, description: String): Project
+  newStudentProject(hackathonId: ID!, projectName:String!, projectDescription: String, studentName: String!, studentEmail: String!, studentPhone: String): Project
 }

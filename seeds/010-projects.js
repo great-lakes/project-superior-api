@@ -24,6 +24,6 @@ exports.seed = (knex, Promise) =>
           description: 'An AI model that will keep the conversation going. Drawing from wikipedia, and gamification theories to keep the human engaged.',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
-          hackathon_id: 1
+          hackathon_id: 2
         }
       ])
