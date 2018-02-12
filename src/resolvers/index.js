@@ -1,8 +1,25 @@
-const project = require('./project')
-const hackathon = require('./hackathon')
+const { project, newStudentProject } = require('./project')
+const { hackathon, hackathons } = require('./hackathon')
+const { student, createStudent } = require('./student')
+const { setInquiryStatus, setInquiryNotes, setInquiryMentor } = require('./inquiry')
+const { takeAzurecodeById, takeOneAzurecode } = require('./azurecode')
+const { mentor } = require('./mentor')
+const { skill } = require('./skill')
+const { technology } = require('./technology')
 
 module.exports = {
-  hackathons: hackathon,
+  hackathons,
   project,
-  hackathon
+  hackathon,
+  student,
+  mentor,
+  skill,
+  technology,
+  setInquiryStatus,
+  setInquiryNotes,
+  setInquiryMentor,
+  takeAzurecodeById,
+  takeOneAzurecode,
+  createStudent,
+  newStudentProject
 }

@@ -16,6 +16,12 @@ class Project extends Model {
       .then(students => student.loadMany(students.map(stu => stu.id)))
   }
 
+  technologies () {
+    const {technology} = require('../loaders')
+    return this.$relatedQuery('technologies')
+      .then(technologies => technology.loadMany(technologies.map(tech => tech.id)))
+  }
+
   static get relationMappings () {
     // Import models here to prevent require loops.
     const Student = require('./Student')

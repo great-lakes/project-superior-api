@@ -6,12 +6,12 @@ class Technology extends Model {
   }
   static get relationMappings () {
     // Import models here to prevent require loops.
-    const Technology = require('./Technology')
+    const Project = require('./Project')
 
     return {
       projects: {
         relation: Model.ManyToManyRelation,
-        modelClass: Technology,
+        modelClass: Project,
         join: {
           from: 'technologies.id',
           through: {
