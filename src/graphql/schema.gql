@@ -7,6 +7,8 @@ Object Type Definition
 type Technology {
   id: ID!
   name: String
+  doc_link: String
+  help_text: String
   projects: [Project]
 }
 
