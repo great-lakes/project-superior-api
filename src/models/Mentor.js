@@ -4,6 +4,14 @@ class Mentor extends Model {
   static get tableName () {
     return 'mentors'
   }
+
+  skills () {
+    const { skill } = require('../loaders')
+    return this.$relatedQuery('skills').then((skills) => {
+      return skill.loadMany(skills.map(_ => _.id))
+    })
+  }
+
   static get relationMappings () {
     // Import models here to prevent require loops.
     const Hackathon = require('./Hackathon')
@@ -38,7 +46,7 @@ class Mentor extends Model {
           from: 'mentors.id',
           through: {
             from: 'mentors_skills.mentor_id',
-            to: 'mentors_skills.mentor_id'
+            to: 'mentors_skills.skill_id'
           },
           to: 'skills.id'
         }
