@@ -64,7 +64,7 @@ type Mentor {
   email: String
   phone: String
   bio: String
-  is_availabe: Boolean
+  is_available: Boolean
   skills: [Skill]
   hackathons: [Hackathon]
 }
