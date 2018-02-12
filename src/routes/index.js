@@ -17,7 +17,8 @@ module.exports = (server) => {
     graphql({
       schema,
       source: req.body.query,
-      rootValue: rootResolver
+      rootValue: rootResolver,
+      variableValues: req.body.variables
     }).then((response) => {
       res.json(response)
     })
