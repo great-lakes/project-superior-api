@@ -1,7 +1,7 @@
-exports.takeAzurecodeById = ({id}) => {
+exports.issueAzurecodeById = ({id}) => {
 
 }
 
-exports.takeOneAzurecode = ({hackathonId}) => {
+exports.issueUnclaimedAzurecode = ({hackathonId}) => {
 
 }

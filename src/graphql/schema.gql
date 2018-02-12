@@ -106,8 +106,8 @@ type Mutation {
   setInquiryStatus(id: ID!, status: InquiryStatus!): Inquiry
   setInquiryNotes(id: ID!, notes: String): Inquiry
   setInquiryMentor(inquiryId: ID!, mentorId: ID!): Inquiry
-  takeAzurecode(id: ID!): Azurecode
-  takeOneAzurecode(hackathonId: ID!): Azurecode
+  issueAzurecodeById(id: ID!): Azurecode
+  issueUnclaimedAzurecode(hackathonId: ID!): Azurecode
   # createStudent(name: String!, email: String!, phone: String): Student
   # createProject(name: String!, description: String): Project
   newStudentProject(hackathonId: ID!, projectName:String!, projectDescription: String, studentName: String!, studentEmail: String!, studentPhone: String): Project
