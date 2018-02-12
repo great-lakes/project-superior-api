@@ -17,7 +17,12 @@ class Hackathon extends Model {
   //   const { azurecodes } = require('../loaders')
   //   return azurecodes.loadMany()
   // }
-
+  mentors () {
+    const { mentor } = require('../loaders')
+    return this.$relatedQuery('mentors').then((mentors) => {
+      return mentor.loadMany(mentors.map(mentorObj => mentorObj.id))
+    })
+  }
   inquiries () {
     return this.$relatedQuery('projects').then((projects) => {
       return Promise.all(projects.map((project) => project.$relatedQuery('students')))
