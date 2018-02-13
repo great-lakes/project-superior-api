@@ -5,15 +5,20 @@ class Student extends Model {
     return 'students'
   }
 
-  project () {
-    const { project } = require('../loaders')
-    return project.load(this.project_id)
+  project (args, {loaders}) {
+    return loaders.project.load(this.project_id)
   }
 
-  inquiries () {
-    const { inquiry } = require('../loaders')
+  inquiries (args, {loaders}) {
     return this.$relatedQuery('inquiries')
-      .then(inquiries => inquiry.loadMany(inquiries.map(inq => inq.id)))
+      .then(inquiries => loaders.inquiry.loadMany(inquiries.map(inq => inq.id)))
+  }
+
+  static findWithEmail (hackathonId, email) {
+    return this.query()
+      .eager('project')
+      .where({email})
+      .then((students) => students.find((student) => student.project.hackathon_id === +hackathonId))
   }
 
   static get relationMappings () {

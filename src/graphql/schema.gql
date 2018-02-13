@@ -21,6 +21,7 @@ type Project {
   id: ID!
   name: String!
   description: String
+  tech_name: String
   students: [Student]
   hackathon: Hackathon
   technologies: [Technology]
@@ -56,6 +57,8 @@ type Hackathon {
   azurecodes: [Azurecode]
   mentors: [Mentor]
   projects: [Project]
+  findStudent(email: String): Student
+  students: [Student]
   inquiries: [Inquiry]
 }
 
@@ -109,8 +112,7 @@ type Mutation {
   setInquiryNotes(id: ID!, notes: String): Inquiry
   setInquiryMentor(inquiryId: ID!, mentorId: ID!): Inquiry
   issueAzurecodeById(id: ID!): Azurecode
-  issueUnclaimedAzurecode(hackathonId: ID!): Azurecode
-  # createStudent(name: String!, email: String!, phone: String): Student
-  # createProject(name: String!, description: String): Project
+  issueUnclaimedAzurecode(hackathonId: ID!, studentName:String!, studentEmail: String!, projectName: String!, projectDescription: String, projectTechText: String): Azurecode
+  newInquiry(hackathonId: ID!, studentName: String!, studentEmail: String!, question: String!): Inquiry
   newStudentProject(hackathonId: ID!, projectName:String!, projectDescription: String, studentName: String!, studentEmail: String!, studentPhone: String): Project
 }

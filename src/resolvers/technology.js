@@ -1,3 +1,2 @@
-const { technology } = require('../loaders')
 
-exports.technology = ({id}) => technology.load(id)
+exports.technology = ({id}, {loaders}) => loaders.technology.load(id)

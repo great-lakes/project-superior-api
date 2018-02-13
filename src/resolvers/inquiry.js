@@ -1,19 +1,17 @@
-const { inquiry } = require('../loaders')
-
 const Inquiry = require('../models/Inquiry')
 
-exports.inquiry = ({id}) => inquiry.load(id)
+exports.inquiry = ({id}, {loaders}) => loaders.inquiry.load(id)
 
-exports.setInquiryStatus = ({id, status}) => {
+exports.setInquiryStatus = ({id, status}, {loaders}) => {
   return Inquiry
     .query()
     .patchAndFetchById(id, {is_resolved: status === 'RESOLVED'})
     .then((updatedInquiry) => {
-      return inquiry.load(updatedInquiry.id)
+      return loaders.inquiry.load(updatedInquiry.id)
     })
 }
 
-exports.setInquiryNotes = ({id, notes}) => {
+exports.setInquiryNotes = ({id, notes}, {loaders}) => {
   if (typeof notes === 'undefined') {
     return {error: 'notes is undefined'}
   }
@@ -22,13 +20,13 @@ exports.setInquiryNotes = ({id, notes}) => {
     .query()
     .patchAndFetchById(id, {mentor_notes: notes})
     .then((updatedInquiry) => {
-      return inquiry.load(updatedInquiry.id)
+      return loaders.inquiry.load(updatedInquiry.id)
     })
 }
 
-exports.setInquiryMentor = ({inquiryId, mentorId}) => {
+exports.setInquiryMentor = ({inquiryId, mentorId}, {loaders}) => {
   return Inquiry
     .query()
     .patchAndFetchById(inquiryId, {mentor_id: mentorId})
-    .then((updatedInquiry) => inquiry.load(updatedInquiry.id))
+    .then((updatedInquiry) => loaders.inquiry.load(updatedInquiry.id))
 }

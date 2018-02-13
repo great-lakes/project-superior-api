@@ -4,18 +4,21 @@ exports.seed = (knex, Promise) =>
         {
           name: 'Fire Fighting Robot',
           description: 'A robot that will find a water source, and seek out fires to put out',
+          tech_name: 'bots',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           hackathon_id: 1
         }, {
           name: 'Tweet Alert Bot',
           description: 'A chat bot that notifies you when a certain hashtag is tweeted.  And you can ask the bot to tweet things out for you at a certain interval',
+          tech_name: 'social media',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           hackathon_id: 1
         }, {
           name: 'Game for good',
           description: 'Everytime you play the game, the score is equal to how many drops of water will be donated to Charity Water',
+          tech_name: 'web app',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           hackathon_id: 1

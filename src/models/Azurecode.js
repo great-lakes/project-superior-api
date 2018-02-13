@@ -12,12 +12,15 @@ class Azurecode extends Model {
     return 'azurecodes'
   }
 
-  student () {
-    const { student } = require('../loaders')
+  student (args, {loaders}) {
     if (this.student_id) {
-      return student.load(this.student_id)
+      return loaders.student.load(this.student_id)
     }
     return null
+  }
+
+  hackathon (args, {loaders}) {
+    return loaders.hackathon.load(this.hackathon_id)
   }
 
   static get relationMappings () {

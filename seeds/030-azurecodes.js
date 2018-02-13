@@ -4,21 +4,25 @@ exports.seed = (knex, Promise) =>
         {
           code: 'abc',
           expires_on: '2018-03-01',
+          is_taken: true,
           student_id: 1,
           hackathon_id: 1
         }, {
           code: 'def',
           expires_on: '2018-03-01',
+          is_taken: true,
           student_id: 2,
           hackathon_id: 1
         }, {
           code: 'ghi',
           expires_on: '2018-03-01',
+          is_taken: true,
           student_id: 3,
           hackathon_id: 1
         }, {
           code: 'jkl',
           expires_on: '2018-03-01',
+          is_taken: true,
           student_id: 4,
           hackathon_id: 1
         }, {
