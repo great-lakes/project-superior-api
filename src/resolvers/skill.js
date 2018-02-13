@@ -1,3 +1,2 @@
-const { skill } = require('../loaders')
 
-exports.skill = ({id}) => skill.load(id)
+exports.skill = ({id}, {loaders}) => loaders.skill.load(id)

@@ -1,3 +1,1 @@
-const { mentor } = require('../loaders')
-
-exports.mentor = ({id}) => mentor.load(id)
+exports.mentor = ({id}, {loaders}) => loaders.mentor.load(id)

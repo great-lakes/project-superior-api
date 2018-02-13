@@ -5,22 +5,19 @@ class Inquiry extends Model {
     return 'inquiries'
   }
 
-  mentor () {
-    const { mentor } = require('../loaders')
+  mentor (args, {loaders}) {
     if (this.mentor_id) {
-      return mentor.load(this.mentor_id)
+      return loaders.mentor.load(this.mentor_id)
     }
     return null
   }
 
-  student () {
-    const { student } = require('../loaders')
-    return student.load(this.student_id)
+  student (args, {loaders}) {
+    return loaders.student.load(this.student_id)
   }
 
-  skill () {
-    const { skill } = require('../loaders')
-    return skill.load(this.skill_id)
+  skill (args, {loaders}) {
+    return loaders.skill.load(this.skill_id)
   }
 
   static get relationMappings () {

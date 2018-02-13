@@ -5,21 +5,18 @@ class Project extends Model {
     return 'projects'
   }
 
-  hackathon () {
-    const {hackathon} = require('../loaders')
-    return hackathon.load(this.hackathon_id)
+  hackathon (args, {loaders}) {
+    return loaders.hackathon.load(this.hackathon_id)
   }
 
-  students () {
-    const {student} = require('../loaders')
+  students (args, {loaders}) {
     return this.$relatedQuery('students')
-      .then(students => student.loadMany(students.map(stu => stu.id)))
+      .then(students => loaders.student.loadMany(students.map(stu => stu.id)))
   }
 
-  technologies () {
-    const {technology} = require('../loaders')
+  technologies (args, {loaders}) {
     return this.$relatedQuery('technologies')
-      .then(technologies => technology.loadMany(technologies.map(tech => tech.id)))
+      .then(technologies => loaders.technology.loadMany(technologies.map(tech => tech.id)))
   }
 
   static get relationMappings () {

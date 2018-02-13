@@ -5,10 +5,9 @@ class Mentor extends Model {
     return 'mentors'
   }
 
-  skills () {
-    const { skill } = require('../loaders')
+  skills (args, {loaders}) {
     return this.$relatedQuery('skills').then((skills) => {
-      return skill.loadMany(skills.map(_ => _.id))
+      return loaders.skill.loadMany(skills.map(_ => _.id))
     })
   }
 

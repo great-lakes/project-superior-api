@@ -6,24 +6,28 @@ class Hackathon extends Model {
     return 'hackathons'
   }
 
-  // projects () {
-  //   const { project } = require('../loaders')
-  //   return this.$relatedQuery('projects').then((projects) => {
-  //     return project.loadMany(projects.map((project) => project.id))
-  //   })
-  // }
-
-  // azurecodes () {
-  //   const { azurecodes } = require('../loaders')
-  //   return azurecodes.loadMany()
-  // }
-  mentors () {
-    const { mentor } = require('../loaders')
+  mentors (args, {loaders}) {
     return this.$relatedQuery('mentors').then((mentors) => {
-      return mentor.loadMany(mentors.map(mentorObj => mentorObj.id))
+      return loaders.mentor.loadMany(mentors.map(mentorObj => mentorObj.id))
     })
   }
-  inquiries () {
+
+  students (args, {loaders}) {
+    return this.$relatedQuery('projects').then((projects) => {
+      return Promise.all(projects.map((project) => project.$relatedQuery('students')))
+    })
+    .then((studentsNested) => {
+      const students = _.flattenDeep(studentsNested)
+      return loaders.student.loadMany(students.map((student) => student.id))
+    })
+  }
+
+  findStudent ({email}, {loaders}, info) {
+    const Student = require('../models/Student')
+    return Student.findWithEmail(this.id, email)
+  }
+
+  inquiries (args, {loaders}, info) {
     return this.$relatedQuery('projects').then((projects) => {
       return Promise.all(projects.map((project) => project.$relatedQuery('students')))
     })
@@ -33,8 +37,7 @@ class Hackathon extends Model {
     })
     .then((inquiriesNested) => {
       const inquiries = _.flattenDeep(inquiriesNested)
-      const {inquiry: inquiryLoader} = require('../loaders')
-      return inquiryLoader.loadMany(inquiries.map(inquiry => inquiry.id))
+      return loaders.inquiry.loadMany(inquiries.map(inquiry => inquiry.id))
     })
   }
 
