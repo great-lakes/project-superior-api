@@ -1,7 +1,7 @@
 const { project, newStudentProject } = require('./project')
 const { hackathon, hackathons } = require('./hackathon')
 const { student, createStudent } = require('./student')
-const { setInquiryStatus, setInquiryNotes, setInquiryMentor } = require('./inquiry')
+const { setInquiryStatus, setInquiryNotes, setInquiryMentor, newInquiry } = require('./inquiry')
 const { azurecode, issueAzurecodeById, issueUnclaimedAzurecode } = require('./azurecode')
 const { mentor } = require('./mentor')
 const { skill } = require('./skill')
@@ -21,6 +21,7 @@ module.exports = {
   setInquiryStatus,
   setInquiryNotes,
   setInquiryMentor,
+  newInquiry,
   issueAzurecodeById,
   issueUnclaimedAzurecode,
   createStudent,
