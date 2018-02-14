@@ -63,7 +63,11 @@ type Hackathon {
   description: String
   start_date: Date
   end_date: Date
-  bot_deployed: Boolean
+  bot_deployed: String
+  bot_directline_key: String
+  survey_link: String
+  survey_promo: String
+  survey_prize: String
   azurecodes: [Azurecode]
   mentors: [Mentor]
   projects: [Project]
