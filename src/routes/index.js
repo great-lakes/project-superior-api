@@ -10,6 +10,11 @@ module.exports = (server, appInsightClient) => {
     require('./playground')(server)
   }
 
+  server.get('/', (req, res, next) => {
+    appInsightClient.trackNodeHttpRequest({request: req, response: res})
+    res.json({name: 'Hanna Bot API'})
+  })
+
   server.post('/graphql', (req, res, next) => {
     appInsightClient.trackNodeHttpRequest({request: req, response: res})
     if (req.query.access_token !== process.env.GRAPHQL_ACCESS_TOKEN) {
