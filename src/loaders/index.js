@@ -9,6 +9,7 @@ module.exports = function createLoaders () {
     project: genericLoader(require('../models/Project')),
     skill: genericLoader(require('../models/Skill')),
     student: genericLoader(require('../models/Student')),
-    technology: genericLoader(require('../models/Technology'))
+    technology: genericLoader(require('../models/Technology')),
+    session: genericLoader(require('../models/Session'))
   }
 }

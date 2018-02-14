@@ -27,6 +27,16 @@ type Project {
   technologies: [Technology]
 }
 
+type Session {
+  id: ID!
+  name: String!
+  description: String
+  time: String
+  day: String
+  attendance: Int
+  hackathon: Hackathon
+}
+
 type Student {
   id: ID!
   name: String
@@ -53,10 +63,15 @@ type Hackathon {
   description: String
   start_date: Date
   end_date: Date
-  bot_deployed: Boolean
+  bot_deployed: String
+  bot_directline_key: String
+  survey_link: String
+  survey_promo: String
+  survey_prize: String
   azurecodes: [Azurecode]
   mentors: [Mentor]
   projects: [Project]
+  sessions: [Session]
   findStudent(email: String): Student
   students: [Student]
   inquiries: [Inquiry]
@@ -79,6 +94,8 @@ type Inquiry {
   question: String
   mentor_notes: String
   is_resolved: Boolean
+  created_at: String
+  updated_at: String
   student: Student
   mentor: Mentor
   skill: Skill

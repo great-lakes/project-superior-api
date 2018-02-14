@@ -5,6 +5,14 @@ class Inquiry extends Model {
     return 'inquiries'
   }
 
+  $beforeInsert () {
+    this.created_at = new Date().toISOString()
+  }
+
+  $beforeUpdate () {
+    this.updated_at = new Date().toISOString()
+  }
+
   mentor (args, {loaders}) {
     if (this.mentor_id) {
       return loaders.mentor.load(this.mentor_id)
