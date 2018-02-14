@@ -94,6 +94,8 @@ type Inquiry {
   question: String
   mentor_notes: String
   is_resolved: Boolean
+  created_at: String
+  updated_at: String
   student: Student
   mentor: Mentor
   skill: Skill
