@@ -27,6 +27,16 @@ type Project {
   technologies: [Technology]
 }
 
+type Session {
+  id: ID!
+  name: String!
+  description: String
+  time: String
+  day: String
+  attendance: Int
+  hackathon: Hackathon
+}
+
 type Student {
   id: ID!
   name: String
@@ -57,6 +67,7 @@ type Hackathon {
   azurecodes: [Azurecode]
   mentors: [Mentor]
   projects: [Project]
+  sessions: [Session]
   findStudent(email: String): Student
   students: [Student]
   inquiries: [Inquiry]

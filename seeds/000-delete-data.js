@@ -7,6 +7,7 @@ const databases = [
   'students',
   'hackathons',
   'projects',
+  'sessions',
   'mentors',
   'technologies',
   'skills'

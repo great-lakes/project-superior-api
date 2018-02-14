@@ -12,6 +12,12 @@ class Hackathon extends Model {
     })
   }
 
+  sessions (args, {loaders}) {
+    return this.$relatedQuery('sessions').then((mentors) => {
+      return loaders.mentor.loadMany(mentors.map(mentorObj => mentorObj.id))
+    })
+  }
+
   students (args, {loaders}) {
     return this.$relatedQuery('projects').then((projects) => {
       return Promise.all(projects.map((project) => project.$relatedQuery('students')))
@@ -46,6 +52,7 @@ class Hackathon extends Model {
     const Azurecode = require('./Azurecode')
     const Project = require('./Project')
     const Mentor = require('./Mentor')
+    const Session = require('./Session')
 
     return {
       azurecodes: {
@@ -62,6 +69,14 @@ class Hackathon extends Model {
         join: {
           from: 'hackathons.id',
           to: 'projects.hackathon_id'
+        }
+      },
+      sessions: {
+        relation: Model.HasManyRelation,
+        modelClass: Session,
+        join: {
+          from: 'hackathons.id',
+          to: 'sessions.hackathon_id'
         }
       },
       mentors: {

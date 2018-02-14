@@ -6,6 +6,7 @@ const { azurecode, issueAzurecodeById, issueUnclaimedAzurecode } = require('./az
 const { mentor } = require('./mentor')
 const { skill } = require('./skill')
 const { technology } = require('./technology')
+const { session } = require('./session')
 
 module.exports = {
   hackathons,
@@ -16,6 +17,7 @@ module.exports = {
   mentor,
   skill,
   technology,
+  session,
   setInquiryStatus,
   setInquiryNotes,
   setInquiryMentor,
