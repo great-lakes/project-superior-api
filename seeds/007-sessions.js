@@ -6,6 +6,7 @@ exports.seed = (knex, Promise) =>
       description: 'Come and learn about Cognitive Services by our very own Kevin',
       time: '3-5pm',
       day: 'Friday',
+      place: 'room 123',
       hackathon_id: 1
     },
     {
@@ -13,6 +14,7 @@ exports.seed = (knex, Promise) =>
       description: 'Come and learn about Tensor by our very own Samantha',
       time: '2-4pm',
       day: 'Saturay',
+      place: 'courtyard',
       hackathon_id: 1
     },
     {
@@ -20,6 +22,7 @@ exports.seed = (knex, Promise) =>
       description: 'Come and learn about Cognitive Services by our very own Sarah',
       time: '3-5pm',
       day: 'Monday',
+      place: 'TBD',
       hackathon_id: 1
     },
     {

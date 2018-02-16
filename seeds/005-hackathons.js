@@ -4,6 +4,7 @@ exports.seed = (knex, Promise) =>
     {
       name: 'HackIllinois 2018',
       slug: 'uiuc2018',
+      team_email: 'hackillinois@example.com',
       description: 'The hackathon that takes place in Urbana, IL at University of Illinois Campus',
       start_date: '2018-02-23',
       end_date: '2018-02-25',
