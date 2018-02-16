@@ -15,6 +15,7 @@ type Technology {
   doc_link: String
   help_text: String
   projects: [Project]
+  hackathons: [Hackathon]
 }
 
 type Project {
@@ -68,6 +69,7 @@ type Hackathon {
   survey_link: String
   survey_promo: String
   survey_prize: String
+  technologies: [Technology]
   azurecodes: [Azurecode]
   mentors: [Mentor]
   projects: [Project]

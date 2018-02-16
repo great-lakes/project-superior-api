@@ -14,7 +14,13 @@ class Hackathon extends Model {
 
   sessions (args, {loaders}) {
     return this.$relatedQuery('sessions').then((mentors) => {
-      return loaders.mentor.loadMany(mentors.map(mentorObj => mentorObj.id))
+      return loaders.sessions.loadMany(mentors.map(mentorObj => mentorObj.id))
+    })
+  }
+
+  technologies (args, {loaders}) {
+    return this.$relatedQuery('technologies').then((technologies) => {
+      return loaders.technologies.loadMany(technologies.map(_ => _.id))
     })
   }
 
@@ -53,6 +59,7 @@ class Hackathon extends Model {
     const Project = require('./Project')
     const Mentor = require('./Mentor')
     const Session = require('./Session')
+    const Technology = require('./Technology')
 
     return {
       azurecodes: {
@@ -89,6 +96,18 @@ class Hackathon extends Model {
             to: 'hackathons_mentors.mentor_id'
           },
           to: 'mentors.id'
+        }
+      },
+      technologies: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Technology,
+        join: {
+          from: 'hackathons.id',
+          through: {
+            from: 'hackathons_technologies.hackathon_id',
+            to: 'hackathons_technologies.technology_id'
+          },
+          to: 'technologies.id'
         }
       }
     }
