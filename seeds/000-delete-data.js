@@ -2,6 +2,7 @@ const databases = [
   'projects_technologies',
   'mentors_skills',
   'hackathons_mentors',
+  'hackathons_technologies',
   'inquiries',
   'azurecodes',
   'students',
