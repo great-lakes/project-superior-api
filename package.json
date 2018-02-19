@@ -33,7 +33,8 @@
     "lodash": "^4.17.5",
     "objection": "^0.9.4",
     "pg": "^7.4.1",
-    "restify": "^6.3.4"
+    "restify": "^6.3.4",
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {
     "docdash": "^0.4.0",

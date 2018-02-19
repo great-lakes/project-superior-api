@@ -1,4 +1,5 @@
 const Model = require('../../bootstrap/dbModel')
+const eventBus = require('../support/eventBus')
 
 class Inquiry extends Model {
   static get tableName () {
@@ -11,6 +12,14 @@ class Inquiry extends Model {
 
   $beforeUpdate () {
     this.updated_at = new Date().toISOString()
+  }
+
+  $afterUpdate (opt, queryContext) {
+    eventBus.emit('inquiry-updated')
+  }
+
+  $afterInsert (queryContext) {
+    eventBus.emit('inquiry-created')
   }
 
   mentor (args, {loaders}) {
