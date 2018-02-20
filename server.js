@@ -14,10 +14,17 @@ if (APP_INSIGHTS_KEY) {
 }
 
 const restify = require('restify')
-var socketio = require('socket.io')
+const socketio = require('socket.io')
+const corsMiddleware = require('restify-cors-middleware')
 const eventBus = require('./src/support/eventBus')
 const registerRoutes = require('./src/routes')
 require('./bootstrap/start')
+
+const cors = corsMiddleware({
+  origins: ['*'],
+  allowHeaders: ['API-Access-Token'],
+  exposeHeaders: ['API-Access-Token-Expiry']
+})
 
 const PORT = process.env.PORT || 3000
 
@@ -36,7 +43,8 @@ io.on('connection', (socket) => {
     socket.emit('inquiry-updated')
   })
 })
-
+server.pre(cors.preflight)
+server.use(cors.actual)
 server.use(restify.plugins.bodyParser())
 server.use(restify.plugins.queryParser())
 
