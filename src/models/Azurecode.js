@@ -1,4 +1,5 @@
 const Model = require('../../bootstrap/dbModel')
+const eventBus = require('../support/eventBus')
 
 /**
  * Azure code model
@@ -21,6 +22,10 @@ class Azurecode extends Model {
 
   hackathon (args, {loaders}) {
     return loaders.hackathon.load(this.hackathon_id)
+  }
+
+  $afterUpdate (opt, queryContext) {
+    eventBus.emit('azurecode-updated', {id: this.id})
   }
 
   static get relationMappings () {

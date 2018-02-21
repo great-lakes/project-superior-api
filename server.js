@@ -34,15 +34,18 @@ const server = restify.createServer({
 })
 
 const io = socketio.listen(server.server)
-
-io.on('connection', (socket) => {
-  eventBus.on('inquiry-created', () => {
-    socket.emit('inquiry-created')
-  })
-  eventBus.on('inquiry-updated', () => {
-    socket.emit('inquiry-updated')
-  })
+eventBus.on('inquiry-created', (data) => {
+  io.emit('inquiry-created', data)
 })
+
+eventBus.on('inquiry-updated', (data) => {
+  io.emit('inquiry-updated', data)
+})
+
+eventBus.on('azurecode-updated', (data) => {
+  io.emit('azurecode-updated', data)
+})
+
 server.pre(cors.preflight)
 server.use(cors.actual)
 server.use(restify.plugins.bodyParser())

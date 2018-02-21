@@ -15,11 +15,11 @@ class Inquiry extends Model {
   }
 
   $afterUpdate (opt, queryContext) {
-    eventBus.emit('inquiry-updated')
+    eventBus.emit('inquiry-updated', {id: this.id})
   }
 
   $afterInsert (queryContext) {
-    eventBus.emit('inquiry-created')
+    eventBus.emit('inquiry-created', {id: this.id})
   }
 
   mentor (args, {loaders}) {
