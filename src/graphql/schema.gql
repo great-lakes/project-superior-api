@@ -34,6 +34,7 @@ type Session {
   description: String
   time: String
   day: String
+  place: String
   attendance: Int
   hackathon: Hackathon
 }
