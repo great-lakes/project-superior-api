@@ -1,6 +1,8 @@
 const Inquiry = require('../models/Inquiry')
 const Student = require('../models/Student')
 const Project = require('../models/Project')
+const Mentor = require('../models/Mentor')
+const sendMentorAssignedEmail = require('../support/emails/sendMentorAssignedEmail')
 
 exports.inquiry = ({id}, {loaders}) => loaders.inquiry.load(id)
 
@@ -26,10 +28,25 @@ exports.setInquiryNotes = ({id, notes}, {loaders}) => {
     })
 }
 
+const sendEmailIfMentorWasNull = ([inquiry, mentor]) => {
+  if (!inquiry.mentor_id) {
+    const studentEmail = inquiry.student.email
+    const aliasEmail = process.env.ALIAS_EMAIL
+    const mentorEmail = mentor.email
+    return sendMentorAssignedEmail(studentEmail, aliasEmail, mentorEmail)
+  }
+}
+
 exports.setInquiryMentor = ({inquiryId, mentorId}, {loaders}) => {
-  return Inquiry
-    .query()
-    .patchAndFetchById(inquiryId, {mentor_id: mentorId})
+  const getInquiry = Inquiry.query().eager('student').findById(inquiryId)
+  const getMentor = Mentor.query().findById(mentorId)
+  return Promise.all([getInquiry, getMentor])
+    .then(sendEmailIfMentorWasNull)
+    .then(() => {
+      return Inquiry
+        .query()
+        .patchAndFetchById(inquiryId, {mentor_id: mentorId})
+    })
     .then((updatedInquiry) => loaders.inquiry.load(updatedInquiry.id))
 }
 

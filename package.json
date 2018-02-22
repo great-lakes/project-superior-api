@@ -31,6 +31,8 @@
     "graphql": "^0.12.3",
     "knex": "^0.14.2",
     "lodash": "^4.17.5",
+    "nodemailer": "^4.6.0",
+    "nodemailer-sparkpost-transport": "^2.0.0",
     "objection": "^0.9.4",
     "pg": "^7.4.1",
     "restify": "^6.3.4",
