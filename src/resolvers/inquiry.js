@@ -41,8 +41,12 @@ exports.setInquiryMentor = ({inquiryId, mentorId}, {loaders}) => {
   const getInquiry = Inquiry.query().eager('student').findById(inquiryId)
   const getMentor = Mentor.query().findById(mentorId)
   return Promise.all([getInquiry, getMentor])
-    .then(sendEmailIfMentorWasNull)
-    .then(() => {
+    .then((results) => {
+      sendEmailIfMentorWasNull(results) // sending the email out to the void :(
+        .catch((error) => {             // makes the response faster
+          console.log(error)
+        })
+
       return Inquiry
         .query()
         .patchAndFetchById(inquiryId, {mentor_id: mentorId})
