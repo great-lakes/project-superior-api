@@ -1,0 +1,22 @@
+exports.up = (knex, Promise) =>
+knex.schema.createTable('surveyanswers', (table) => {
+  table.increments('id')
+  table.integer('surveyquestion_id')
+      .unsigned().index()
+      .references('id').inTable('surveyquestions')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+  table.string('value')
+  table.integer('surveychoice_id')
+      .unsigned().index()
+      .references('id').inTable('surveychoices')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+  table.integer('hackathon_id')
+      .unsigned().index()
+      .references('id').inTable('hackathons')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+})
+
+exports.down = (knex, Promise) => knex.schema.dropTable('surveyanswers')
