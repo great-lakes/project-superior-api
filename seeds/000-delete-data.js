@@ -3,9 +3,14 @@ const databases = [
   'mentors_skills',
   'hackathons_mentors',
   'hackathons_technologies',
+  'hackathons_surveys',
   'inquiries',
   'azurecodes',
   'students',
+  'surveyanswers',
+  'surveychoices',
+  'surveyquestions',
+  'surveys',
   'hackathons',
   'projects',
   'sessions',
@@ -17,7 +22,7 @@ const databases = [
 const truncateOrder = databases.reverse()
 
 exports.seed = (knex, Promise) => Promise.each(databases.map((dbName) => knex(dbName).del()), () => {})
-
+.then(() => console.log('everything is deleted'))
 .then(() => Promise.all(truncateOrder.map(dbName => {
   const seqName = `${dbName}_id_seq`
   const sql = `
@@ -30,3 +35,4 @@ exports.seed = (knex, Promise) => Promise.each(databases.map((dbName) => knex(db
       console.log(`${dbName} does not have auto_increment id`)
     })
 })))
+.then(() => console.log('everything is truncated'))
