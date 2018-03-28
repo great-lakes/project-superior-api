@@ -4,6 +4,11 @@ class Skill extends Model {
   static get tableName () {
     return 'skills'
   }
+
+  mentors () {
+    return this.$relatedQuery('mentors')
+  }
+
   static get relationMappings () {
     // Import models here to prevent require loops.
     const Inquiry = require('./Inquiry')

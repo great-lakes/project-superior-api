@@ -1,2 +1,1 @@
-
-exports.skill = ({id}, {loaders}) => loaders.skill.load(id)
+exports.skill = ({id}, {loaders}) => require('../models/Skill').query().findById(id)

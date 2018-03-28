@@ -10,6 +10,11 @@ module.exports = function createLoaders () {
     skill: genericLoader(require('../models/Skill')),
     student: genericLoader(require('../models/Student')),
     technology: genericLoader(require('../models/Technology')),
-    session: genericLoader(require('../models/Session'))
+    session: genericLoader(require('../models/Session')),
+    survey: genericLoader(require('../models/Survey')),
+    surveyAnswer: genericLoader(require('../models/SurveyAnswer')),
+    surveyChoice: genericLoader(require('../models/SurveyChoice')),
+    surveyQuestion: genericLoader(require('../models/SurveyQuestion')),
+    surveySubmission: genericLoader(require('../models/SurveySubmission'))
   }
 }

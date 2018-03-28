@@ -6,7 +6,7 @@ module.exports = (Model) => {
       return Model
         .query()
         .findById(key)
-        .eager('[' + Object.keys(Model.relationMappings).join(',') + ']')
+        // .eager('[' + Object.keys(Model.relationMappings).join(',') + ']')
     })
   ))
 }

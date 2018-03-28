@@ -5,6 +5,11 @@ enum InquiryStatus {
   RESOLVED  
 }
 
+enum SurveyQuestionType {
+  TEXT
+  CHOICE
+}
+
 """
 Object Type Definition
 """
@@ -78,6 +83,8 @@ type Hackathon {
   findStudent(email: String): Student
   students: [Student]
   inquiries: [Inquiry]
+  surveys: [Survey]
+  survey_submissions: [SurveySubmission]
 }
 
 type Mentor {
@@ -107,8 +114,51 @@ type Inquiry {
 type Skill {
   id: ID!
   name: String
-  mentors: [Mentor],
+  mentors: [Mentor]
   inquiries: [Inquiry]
+}
+
+type Survey {
+  id: ID!
+  title: String
+  prize: String
+  link: String
+  promo: String
+  survey_questions: [SurveyQuestion]
+  hackathons: [Hackathon]
+}
+
+type SurveyQuestion {
+  id: ID!
+  prompt: String
+  type: SurveyQuestionType
+  survey: Survey
+  order: Int
+  survey_choices: [SurveyChoice]
+}
+
+type SurveyChoice {
+  id: ID!
+  value: String
+  order: Int
+  survey_question: SurveyQuestion
+  survey_answers: [SurveyAnswer]
+}
+
+type SurveyAnswer {
+  id: ID!
+  survey_question: SurveyQuestion
+  value: String
+  survey_choice: SurveyChoice
+  survey_submission: SurveySubmission
+}
+
+type SurveySubmission {
+  id: ID!
+  hackathon: Hackathon,
+  survey: Survey,
+  student: Student,
+  survey_answers: SurveyAnswer
 }
 
 """
@@ -125,6 +175,9 @@ type Query {
   technology(id: ID!): Technology
   azurecode(id: ID!): Azurecode
   student(id: ID!): Student
+  survey(id: ID!): Survey
+  surveySubmission(id: ID!): SurveySubmission
+  randomSubmission(hackathonId: ID!, surveyId: ID!): SurveySubmission
 }
 
 type Mutation {

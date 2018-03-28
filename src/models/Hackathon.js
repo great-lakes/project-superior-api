@@ -1,4 +1,5 @@
 const Model = require('../../bootstrap/dbModel')
+const relatedModelLoader = require('../loaders/relatedModelLoader')
 const _ = require('lodash')
 
 class Hackathon extends Model {
@@ -6,22 +7,20 @@ class Hackathon extends Model {
     return 'hackathons'
   }
 
+  surveys (args, {loaders}) {
+    return relatedModelLoader(this, loaders, 'surveys', 'survey')
+  }
+
   mentors (args, {loaders}) {
-    return this.$relatedQuery('mentors').then((mentors) => {
-      return loaders.mentor.loadMany(mentors.map(mentorObj => mentorObj.id))
-    })
+    return relatedModelLoader(this, loaders, 'mentors', 'mentor')
   }
 
   sessions (args, {loaders}) {
-    return this.$relatedQuery('sessions').then((mentors) => {
-      return loaders.sessions.loadMany(mentors.map(mentorObj => mentorObj.id))
-    })
+    return relatedModelLoader(this, loaders, 'sessions', 'session')
   }
 
   technologies (args, {loaders}) {
-    return this.$relatedQuery('technologies').then((technologies) => {
-      return loaders.technologies.loadMany(technologies.map(_ => _.id))
-    })
+    return relatedModelLoader(this, loaders, 'technologies', 'technology')
   }
 
   students (args, {loaders}) {
@@ -60,6 +59,8 @@ class Hackathon extends Model {
     const Mentor = require('./Mentor')
     const Session = require('./Session')
     const Technology = require('./Technology')
+    const Survey = require('./Survey')
+    const SurveySubmission = require('./SurveySubmission')
 
     return {
       azurecodes: {
@@ -108,6 +109,26 @@ class Hackathon extends Model {
             to: 'hackathons_technologies.technology_id'
           },
           to: 'technologies.id'
+        }
+      },
+      surveys: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Survey,
+        join: {
+          from: 'hackathons.id',
+          through: {
+            from: 'hackathons_surveys.hackathon_id',
+            to: 'hackathons_surveys.survey_id'
+          },
+          to: 'surveys.id'
+        }
+      },
+      survey_submissions: {
+        relation: Model.HasManyRelation,
+        modelClass: SurveySubmission,
+        join: {
+          from: 'hackathons.id',
+          to: 'surveysubmissions.hackathon_id'
         }
       }
     }

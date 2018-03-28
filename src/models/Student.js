@@ -26,6 +26,7 @@ class Student extends Model {
     const Inquiry = require('./Inquiry')
     const Project = require('./Project')
     const Azurecode = require('./Azurecode')
+    const SurveySubmission = require('./SurveySubmission')
 
     return {
       inquiries: {
@@ -50,6 +51,14 @@ class Student extends Model {
         join: {
           from: 'students.id',
           to: 'azurecodes.student_id'
+        }
+      },
+      survey_submissions: {
+        relation: Model.HasManyRelation,
+        modelClass: SurveySubmission,
+        join: {
+          from: 'students.id',
+          to: 'surveysubmissions.student_id'
         }
       }
     }

@@ -7,6 +7,11 @@ const { mentor } = require('./mentor')
 const { skill } = require('./skill')
 const { technology } = require('./technology')
 const { session } = require('./session')
+const { survey } = require('./survey')
+const { surveyQuestion } = require('./surveyQuestion')
+const { surveyChoice } = require('./surveyChoice')
+const { surveyAnswer } = require('./surveyAnswer')
+const { surveySubmission } = require('./surveySubmission')
 
 module.exports = {
   hackathons,
@@ -25,5 +30,10 @@ module.exports = {
   issueAzurecodeById,
   issueUnclaimedAzurecode,
   createStudent,
-  newStudentProject
+  newStudentProject,
+  survey,
+  surveyQuestion,
+  surveyChoice,
+  surveyAnswer,
+  surveySubmission
 }

@@ -6,9 +6,7 @@ class Mentor extends Model {
   }
 
   skills (args, {loaders}) {
-    return this.$relatedQuery('skills').then((skills) => {
-      return loaders.skill.loadMany(skills.map(_ => _.id))
-    })
+    return this.$relatedQuery('skills')
   }
 
   static get relationMappings () {
