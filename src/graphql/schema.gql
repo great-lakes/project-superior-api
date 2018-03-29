@@ -125,6 +125,7 @@ type Survey {
   link: String
   promo: String
   survey_questions: [SurveyQuestion]
+  survey_submissions: [SurveySubmission]
   hackathons: [Hackathon]
 }
 
@@ -135,6 +136,7 @@ type SurveyQuestion {
   survey: Survey
   order: Int
   survey_choices: [SurveyChoice]
+  survey_answers: [SurveyAnswer]
 }
 
 type SurveyChoice {
@@ -158,7 +160,7 @@ type SurveySubmission {
   hackathon: Hackathon,
   survey: Survey,
   student: Student,
-  survey_answers: SurveyAnswer
+  survey_answers: [SurveyAnswer]
 }
 
 """

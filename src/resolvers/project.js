@@ -1,19 +1,19 @@
 const Project = require('../models/Project')
 const Student = require('../models/Student')
 
-exports.project = (args = {}, {loaders}, info) => {
-  return loaders.project.load(args.id)
+exports.project = (args = {}, context, info) => {
+  return Project.query().findById(args.id)
 }
 
-exports.createProject = ({name, description}, {loaders}) => {
+exports.createProject = ({name, description}, context) => {
   return Project.query()
     .insert({name, description})
     .then((created) => {
-      return loaders.project.load(created.id)
+      return Project.query().findById(created.id)
     })
 }
 
-exports.newStudentProject = ({hackathonId, projectName, projectDescription, studentName, studentEmail, studentPhone}, {loaders}) => {
+exports.newStudentProject = ({hackathonId, projectName, projectDescription, studentName, studentEmail, studentPhone}, context) => {
   let newProject
   return Project.query()
     .insert({hackathon_id: hackathonId, name: projectName, description: projectDescription})
@@ -23,6 +23,6 @@ exports.newStudentProject = ({hackathonId, projectName, projectDescription, stud
         .insert({project_id: createdProject.id, name: studentName, email: studentEmail, phone: studentPhone})
     })
     .then(createdStudent => {
-      return loaders.project.load(newProject.id)
+      return Project.query().findById(newProject.id)
     })
 }

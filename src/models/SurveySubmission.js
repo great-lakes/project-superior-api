@@ -4,6 +4,23 @@ class SurveySubmission extends Model {
   static get tableName () {
     return 'surveysubmissions'
   }
+
+  hackathon (args, context) {
+    return this.$relatedQuery('hackathon')
+  }
+
+  survey (args, context) {
+    return this.$relatedQuery('survey')
+  }
+
+  student (args, context) {
+    return this.$relatedQuery('student')
+  }
+
+  survey_answers (args, context) { // eslint-disable-line camelcase
+    return this.$relatedQuery('survey_answers')
+  }
+
   static get relationMappings () {
     // Import models here to prevent require loops.
     const Hackathon = require('./Hackathon')

@@ -5,13 +5,20 @@ class Student extends Model {
     return 'students'
   }
 
-  project (args, {loaders}) {
-    return loaders.project.load(this.project_id)
+  inquiries (args, context) {
+    return this.$relatedQuery('inquiries')
   }
 
-  inquiries (args, {loaders}) {
-    return this.$relatedQuery('inquiries')
-      .then(inquiries => loaders.inquiry.loadMany(inquiries.map(inq => inq.id)))
+  project (args, context) {
+    return this.$relatedQuery('project')
+  }
+
+  azurecode (args, context) {
+    return this.$relatedQuery('azurecode')
+  }
+
+  survey_submissions (args, context) { // eslint-disable-line camelcase
+    return this.$relatedQuery('survey_submissions')
   }
 
   static findWithEmail (hackathonId, email) {

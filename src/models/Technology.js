@@ -5,6 +5,14 @@ class Technology extends Model {
     return 'technologies'
   }
 
+  projects (args, context) {
+    return this.$relatedQuery('projects')
+  }
+
+  hackathons (args, context) {
+    return this.$relatedQuery('hackathons')
+  }
+
   static get relationMappings () {
     // Import models here to prevent require loops.
     const Project = require('./Project')

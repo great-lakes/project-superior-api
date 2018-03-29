@@ -4,6 +4,19 @@ class SurveyAnswer extends Model {
   static get tableName () {
     return 'surveyanswers'
   }
+
+  survey_question (args, context) { // eslint-disable-line camelcase
+    return this.$relatedQuery('survey_question')
+  }
+
+  survey_choice (args, context) { // eslint-disable-line camelcase
+    return this.$relatedQuery('survey_choice')
+  }
+
+  survey_submission (args, context) { // eslint-disable-line camelcase
+    return this.$relatedQuery('survey_submission')
+  }
+
   static get relationMappings () {
     // Import models here to prevent require loops.
     const SurveyQuestion = require('./SurveyQuestion')

@@ -1,1 +1,3 @@
-exports.surveyQuestion = ({id}, {loaders}) => loaders.surveyQuestion.load(id)
+const SurveyQuestion = require('../models/SurveyQuestion')
+
+exports.surveyQuestion = ({id}, context) => SurveyQuestion.query().findById(id)

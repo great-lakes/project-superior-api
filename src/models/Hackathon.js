@@ -1,5 +1,4 @@
 const Model = require('../../bootstrap/dbModel')
-const relatedModelLoader = require('../loaders/relatedModelLoader')
 const _ = require('lodash')
 
 class Hackathon extends Model {
@@ -7,38 +6,37 @@ class Hackathon extends Model {
     return 'hackathons'
   }
 
-  surveys (args, {loaders}) {
-    return relatedModelLoader(this, loaders, 'surveys', 'survey')
+  surveys (args, context) {
+    return this.$relatedQuery('surveys')
   }
 
-  mentors (args, {loaders}) {
-    return relatedModelLoader(this, loaders, 'mentors', 'mentor')
+  mentors (args, context) {
+    return this.$relatedQuery('mentors')
   }
 
-  sessions (args, {loaders}) {
-    return relatedModelLoader(this, loaders, 'sessions', 'session')
+  sessions (args, context) {
+    return this.$relatedQuery('sessions')
   }
 
-  technologies (args, {loaders}) {
-    return relatedModelLoader(this, loaders, 'technologies', 'technology')
+  technologies (args, context) {
+    return this.$relatedQuery('technologies')
   }
 
-  students (args, {loaders}) {
+  students (args, context) {
     return this.$relatedQuery('projects').then((projects) => {
       return Promise.all(projects.map((project) => project.$relatedQuery('students')))
     })
     .then((studentsNested) => {
-      const students = _.flattenDeep(studentsNested)
-      return loaders.student.loadMany(students.map((student) => student.id))
+      return _.flattenDeep(studentsNested)
     })
   }
 
-  findStudent ({email}, {loaders}, info) {
+  findStudent ({email}, context, info) {
     const Student = require('../models/Student')
     return Student.findWithEmail(this.id, email)
   }
 
-  inquiries (args, {loaders}, info) {
+  inquiries (args, context, info) {
     return this.$relatedQuery('projects').then((projects) => {
       return Promise.all(projects.map((project) => project.$relatedQuery('students')))
     })
@@ -47,8 +45,7 @@ class Hackathon extends Model {
       return Promise.all(students.map((student) => student.$relatedQuery('inquiries')))
     })
     .then((inquiriesNested) => {
-      const inquiries = _.flattenDeep(inquiriesNested)
-      return loaders.inquiry.loadMany(inquiries.map(inquiry => inquiry.id))
+      return _.flattenDeep(inquiriesNested)
     })
   }
 

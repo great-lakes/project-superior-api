@@ -1,1 +1,3 @@
-exports.skill = ({id}, {loaders}) => require('../models/Skill').query().findById(id)
+const Skill = require('../models/Skill')
+
+exports.skill = ({id}, context) => Skill.query().findById(id)

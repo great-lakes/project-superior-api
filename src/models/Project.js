@@ -5,18 +5,16 @@ class Project extends Model {
     return 'projects'
   }
 
-  hackathon (args, {loaders}) {
-    return loaders.hackathon.load(this.hackathon_id)
-  }
-
-  students (args, {loaders}) {
+  students (args, context) {
     return this.$relatedQuery('students')
-      .then(students => loaders.student.loadMany(students.map(stu => stu.id)))
   }
 
-  technologies (args, {loaders}) {
+  technologies (args, context) {
     return this.$relatedQuery('technologies')
-      .then(technologies => loaders.technology.loadMany(technologies.map(tech => tech.id)))
+  }
+
+  hackathon (args, context) {
+    return this.$relatedQuery('hackathon')
   }
 
   static get relationMappings () {

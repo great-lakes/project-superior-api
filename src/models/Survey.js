@@ -5,10 +5,16 @@ class Survey extends Model {
     return 'surveys'
   }
 
-  survey_questions (args, {loaders}) {
-    return this.$relatedQuery('survey_questions').then((survey_questions) => {
-      return loaders.surveyQuestion.loadMany(survey_questions.map(questionObj => questionObj.id))
-    })
+  hackathons (args, context) {
+    return this.$relatedQuery('hackathons')
+  }
+
+  survey_questions (args, context) { // eslint-disable-line camelcase
+    return this.$relatedQuery('survey_questions')
+  }
+
+  survey_submissions (args, context) { // eslint-disable-line camelcase
+    return this.$relatedQuery('survey_submissions')
   }
 
   static get relationMappings () {

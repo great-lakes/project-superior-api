@@ -1,6 +1,5 @@
 const Model = require('../../bootstrap/dbModel')
 const eventBus = require('../support/eventBus')
-
 /**
  * Azure code model
  *
@@ -13,15 +12,16 @@ class Azurecode extends Model {
     return 'azurecodes'
   }
 
-  student (args, {loaders}) {
-    if (this.student_id) {
-      return loaders.student.load(this.student_id)
-    }
-    return null
+  project (args, context) {
+    return this.$relatedQuery('project')
   }
 
-  hackathon (args, {loaders}) {
-    return loaders.hackathon.load(this.hackathon_id)
+  hackathon (args, context) {
+    return this.$relatedQuery('hackathon')
+  }
+
+  student (args, context) {
+    return this.$relatedQuery('student')
   }
 
   $afterUpdate (opt, queryContext) {

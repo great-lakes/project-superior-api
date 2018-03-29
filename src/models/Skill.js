@@ -5,7 +5,11 @@ class Skill extends Model {
     return 'skills'
   }
 
-  mentors () {
+  inquiries (args, context) {
+    return this.$relatedQuery('inquiries')
+  }
+
+  mentors (args, context) {
     return this.$relatedQuery('mentors')
   }
 
