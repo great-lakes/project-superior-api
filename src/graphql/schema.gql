@@ -163,6 +163,34 @@ type SurveySubmission {
   survey_answers: [SurveyAnswer]
 }
 
+
+enum CreationResult {
+  CREATED
+  DUPLICATE
+  FAILED
+}
+
+type CreationResponse {
+  result: CreationResult
+}
+
+"""
+Mutation Types
+"""
+input SurveyAnswerEntry {
+  value: String
+  surveyQuestionId: String
+  surveyChoiceId: String
+}
+
+input SurveyResult {
+  hackathonId: ID!
+  surveyId: ID!
+  studentName: String
+  studentEmail: String
+  data: [SurveyAnswerEntry]
+}
+
 """
 Query Type Definition
 """
@@ -179,7 +207,7 @@ type Query {
   student(id: ID!): Student
   survey(id: ID!): Survey
   surveySubmission(id: ID!): SurveySubmission
-  randomSubmission(hackathonId: ID!, surveyId: ID!): SurveySubmission
+  randomSurveySubmission(hackathonId: ID!, surveyId: ID!): SurveySubmission
 }
 
 type Mutation {
@@ -190,4 +218,5 @@ type Mutation {
   issueUnclaimedAzurecode(hackathonId: ID!, studentName:String!, studentEmail: String!, projectName: String!, projectDescription: String, projectTechText: String): Azurecode
   newInquiry(hackathonId: ID!, studentName: String!, studentEmail: String!, question: String!): Inquiry
   newStudentProject(hackathonId: ID!, projectName:String!, projectDescription: String, studentName: String!, studentEmail: String!, studentPhone: String): Project
+  createSurveySubmission(surveyResult: SurveyResult): CreationResponse
 }

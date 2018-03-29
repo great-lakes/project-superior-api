@@ -11,7 +11,7 @@ const { survey } = require('./survey')
 const { surveyQuestion } = require('./surveyQuestion')
 const { surveyChoice } = require('./surveyChoice')
 const { surveyAnswer } = require('./surveyAnswer')
-const { surveySubmission } = require('./surveySubmission')
+const { surveySubmission, randomSurveySubmission, createSurveySubmission } = require('./surveySubmission')
 
 module.exports = {
   hackathons,
@@ -35,5 +35,7 @@ module.exports = {
   surveyQuestion,
   surveyChoice,
   surveyAnswer,
-  surveySubmission
+  surveySubmission,
+  randomSurveySubmission,
+  createSurveySubmission
 }

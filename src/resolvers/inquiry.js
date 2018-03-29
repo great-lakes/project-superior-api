@@ -10,9 +10,6 @@ exports.setInquiryStatus = ({id, status}, context) => {
   return Inquiry
     .query()
     .patchAndFetchById(id, {is_resolved: status === 'RESOLVED'})
-    .then((updatedInquiry) => {
-      return Inquiry.query().findById(updatedInquiry.id)
-    })
 }
 
 exports.setInquiryNotes = ({id, notes}, context) => {
@@ -23,9 +20,6 @@ exports.setInquiryNotes = ({id, notes}, context) => {
   return Inquiry
     .query()
     .patchAndFetchById(id, {mentor_notes: notes})
-    .then((updatedInquiry) => {
-      return Inquiry.query().findById(updatedInquiry.id)
-    })
 }
 
 const sendEmailIfMentorWasNull = ([inquiry, mentor]) => {
@@ -51,7 +45,6 @@ exports.setInquiryMentor = ({inquiryId, mentorId}, context) => {
         .query()
         .patchAndFetchById(inquiryId, {mentor_id: mentorId})
     })
-    .then((updatedInquiry) => Inquiry.query().findById(updatedInquiry.id))
 }
 
 exports.newInquiry = ({hackathonId, studentName, studentEmail, question}, context) => {
@@ -82,8 +75,5 @@ exports.newInquiry = ({hackathonId, studentName, studentEmail, question}, contex
           question,
           student_id: student.id
         })
-  })
-  .then(created => {
-    return Inquiry.query().findById(created.id)
   })
 }

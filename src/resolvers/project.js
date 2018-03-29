@@ -7,10 +7,7 @@ exports.project = (args = {}, context, info) => {
 
 exports.createProject = ({name, description}, context) => {
   return Project.query()
-    .insert({name, description})
-    .then((created) => {
-      return Project.query().findById(created.id)
-    })
+    .insert({name: name, description: description})
 }
 
 exports.newStudentProject = ({hackathonId, projectName, projectDescription, studentName, studentEmail, studentPhone}, context) => {
@@ -23,6 +20,6 @@ exports.newStudentProject = ({hackathonId, projectName, projectDescription, stud
         .insert({project_id: createdProject.id, name: studentName, email: studentEmail, phone: studentPhone})
     })
     .then(createdStudent => {
-      return Project.query().findById(newProject.id)
+      return newProject
     })
 }

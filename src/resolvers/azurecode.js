@@ -8,9 +8,6 @@ exports.issueAzurecodeById = ({id}, context) => {
   return Azurecode
     .query()
     .patchAndFetchById(id, {is_taken: true})
-    .then((updated) => {
-      return Azurecode.query().findById(updated.id)
-    })
 }
 
 exports.issueUnclaimedAzurecode = ({hackathonId, studentName, studentEmail, projectName, projectDescription, projectTechText}, context) => {
@@ -55,6 +52,6 @@ exports.issueUnclaimedAzurecode = ({hackathonId, studentName, studentEmail, proj
     })
     .then(updated => {
       if (!updated) return null
-      return Azurecode.query().findById(updated.id)
+      return updated
     })
 }

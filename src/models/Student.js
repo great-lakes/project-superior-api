@@ -22,7 +22,8 @@ class Student extends Model {
   }
 
   static findWithEmail (hackathonId, email) {
-    return this.query()
+    console.log(hackathonId, email)
+    return Student.query()
       .eager('project')
       .where({email})
       .then((students) => students.find((student) => student.project.hackathon_id === +hackathonId))
@@ -33,6 +34,7 @@ class Student extends Model {
     const Inquiry = require('./Inquiry')
     const Project = require('./Project')
     const Azurecode = require('./Azurecode')
+    // const Hackathon = require('./Hackathon')
     const SurveySubmission = require('./SurveySubmission')
 
     return {
