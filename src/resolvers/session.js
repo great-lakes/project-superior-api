@@ -1,1 +1,3 @@
-exports.session = ({id}, {loaders}) => loaders.inquiry.load(id)
+const Session = require('../models/Session')
+
+exports.session = ({id}, context) => Session.query().findById(id)

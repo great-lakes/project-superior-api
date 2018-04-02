@@ -1,2 +1,3 @@
+const Technology = require('../models/Technology')
 
-exports.technology = ({id}, {loaders}) => loaders.technology.load(id)
+exports.technology = ({id}, context) => Technology.query().findById(id)

@@ -5,6 +5,11 @@ enum InquiryStatus {
   RESOLVED  
 }
 
+enum SurveyQuestionType {
+  TEXT
+  CHOICE
+}
+
 """
 Object Type Definition
 """
@@ -78,6 +83,8 @@ type Hackathon {
   findStudent(email: String): Student
   students: [Student]
   inquiries: [Inquiry]
+  surveys: [Survey]
+  survey_submissions: [SurveySubmission]
 }
 
 type Mentor {
@@ -107,8 +114,81 @@ type Inquiry {
 type Skill {
   id: ID!
   name: String
-  mentors: [Mentor],
+  mentors: [Mentor]
   inquiries: [Inquiry]
+}
+
+type Survey {
+  id: ID!
+  title: String
+  prize: String
+  link: String
+  promo: String
+  survey_questions: [SurveyQuestion]
+  survey_submissions: [SurveySubmission]
+  hackathons: [Hackathon]
+}
+
+type SurveyQuestion {
+  id: ID!
+  prompt: String
+  type: SurveyQuestionType
+  survey: Survey
+  order: Int
+  survey_choices: [SurveyChoice]
+  survey_answers: [SurveyAnswer]
+}
+
+type SurveyChoice {
+  id: ID!
+  value: String
+  order: Int
+  survey_question: SurveyQuestion
+  survey_answers: [SurveyAnswer]
+}
+
+type SurveyAnswer {
+  id: ID!
+  survey_question: SurveyQuestion
+  value: String
+  survey_choice: SurveyChoice
+  survey_submission: SurveySubmission
+}
+
+type SurveySubmission {
+  id: ID!
+  hackathon: Hackathon,
+  survey: Survey,
+  student: Student,
+  survey_answers: [SurveyAnswer]
+}
+
+
+enum CreationResult {
+  CREATED
+  DUPLICATE
+  FAILED
+}
+
+type CreationResponse {
+  result: CreationResult
+}
+
+"""
+Mutation Types
+"""
+input SurveyAnswerEntry {
+  value: String
+  surveyQuestionId: String
+  surveyChoiceId: String
+}
+
+input SurveyResult {
+  hackathonId: ID!
+  surveyId: ID!
+  studentName: String
+  studentEmail: String
+  data: [SurveyAnswerEntry]
 }
 
 """
@@ -125,6 +205,9 @@ type Query {
   technology(id: ID!): Technology
   azurecode(id: ID!): Azurecode
   student(id: ID!): Student
+  survey(id: ID!): Survey
+  surveySubmission(id: ID!): SurveySubmission
+  randomSurveySubmission(hackathonId: ID!, surveyId: ID!): SurveySubmission
 }
 
 type Mutation {
@@ -135,4 +218,5 @@ type Mutation {
   issueUnclaimedAzurecode(hackathonId: ID!, studentName:String!, studentEmail: String!, projectName: String!, projectDescription: String, projectTechText: String): Azurecode
   newInquiry(hackathonId: ID!, studentName: String!, studentEmail: String!, question: String!): Inquiry
   newStudentProject(hackathonId: ID!, projectName:String!, projectDescription: String, studentName: String!, studentEmail: String!, studentPhone: String): Project
+  createSurveySubmission(surveyResult: SurveyResult): CreationResponse
 }

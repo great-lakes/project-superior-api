@@ -22,19 +22,16 @@ class Inquiry extends Model {
     eventBus.emit('inquiry-created', {id: this.id})
   }
 
-  mentor (args, {loaders}) {
-    if (this.mentor_id) {
-      return loaders.mentor.load(this.mentor_id)
-    }
-    return null
+  mentor (args, context) {
+    return this.$relatedQuery('mentor')
   }
 
-  student (args, {loaders}) {
-    return loaders.student.load(this.student_id)
+  student (args, context) {
+    return this.$relatedQuery('student')
   }
 
-  skill (args, {loaders}) {
-    return loaders.skill.load(this.skill_id)
+  skill (args, context) {
+    return this.$relatedQuery('skill')
   }
 
   static get relationMappings () {

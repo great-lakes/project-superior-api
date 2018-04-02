@@ -2,18 +2,15 @@ const Azurecode = require('../models/Azurecode')
 const Student = require('../models/Student')
 const Project = require('../models/Project')
 
-exports.azurecode = ({id}, {loaders}) => loaders.azurecode.load(id)
+exports.azurecode = ({id}, context) => Azurecode.query().findById(id)
 
-exports.issueAzurecodeById = ({id}, {loaders}) => {
+exports.issueAzurecodeById = ({id}, context) => {
   return Azurecode
     .query()
     .patchAndFetchById(id, {is_taken: true})
-    .then((updated) => {
-      return loaders.azurecode.load(updated.id)
-    })
 }
 
-exports.issueUnclaimedAzurecode = ({hackathonId, studentName, studentEmail, projectName, projectDescription, projectTechText}, {loaders}) => {
+exports.issueUnclaimedAzurecode = ({hackathonId, studentName, studentEmail, projectName, projectDescription, projectTechText}, context) => {
   return Student
     .findWithEmail(hackathonId, studentEmail)
     .then(student => {
@@ -55,6 +52,6 @@ exports.issueUnclaimedAzurecode = ({hackathonId, studentName, studentEmail, proj
     })
     .then(updated => {
       if (!updated) return null
-      return loaders.azurecode.load(updated.id)
+      return updated
     })
 }

@@ -6,40 +6,37 @@ class Hackathon extends Model {
     return 'hackathons'
   }
 
-  mentors (args, {loaders}) {
-    return this.$relatedQuery('mentors').then((mentors) => {
-      return loaders.mentor.loadMany(mentors.map(mentorObj => mentorObj.id))
-    })
+  surveys (args, context) {
+    return this.$relatedQuery('surveys')
   }
 
-  sessions (args, {loaders}) {
-    return this.$relatedQuery('sessions').then((mentors) => {
-      return loaders.sessions.loadMany(mentors.map(mentorObj => mentorObj.id))
-    })
+  mentors (args, context) {
+    return this.$relatedQuery('mentors')
   }
 
-  technologies (args, {loaders}) {
-    return this.$relatedQuery('technologies').then((technologies) => {
-      return loaders.technologies.loadMany(technologies.map(_ => _.id))
-    })
+  sessions (args, context) {
+    return this.$relatedQuery('sessions')
   }
 
-  students (args, {loaders}) {
+  technologies (args, context) {
+    return this.$relatedQuery('technologies')
+  }
+
+  students (args, context) {
     return this.$relatedQuery('projects').then((projects) => {
       return Promise.all(projects.map((project) => project.$relatedQuery('students')))
     })
     .then((studentsNested) => {
-      const students = _.flattenDeep(studentsNested)
-      return loaders.student.loadMany(students.map((student) => student.id))
+      return _.flattenDeep(studentsNested)
     })
   }
 
-  findStudent ({email}, {loaders}, info) {
+  findStudent ({email}, context, info) {
     const Student = require('../models/Student')
     return Student.findWithEmail(this.id, email)
   }
 
-  inquiries (args, {loaders}, info) {
+  inquiries (args, context, info) {
     return this.$relatedQuery('projects').then((projects) => {
       return Promise.all(projects.map((project) => project.$relatedQuery('students')))
     })
@@ -48,8 +45,7 @@ class Hackathon extends Model {
       return Promise.all(students.map((student) => student.$relatedQuery('inquiries')))
     })
     .then((inquiriesNested) => {
-      const inquiries = _.flattenDeep(inquiriesNested)
-      return loaders.inquiry.loadMany(inquiries.map(inquiry => inquiry.id))
+      return _.flattenDeep(inquiriesNested)
     })
   }
 
@@ -60,6 +56,8 @@ class Hackathon extends Model {
     const Mentor = require('./Mentor')
     const Session = require('./Session')
     const Technology = require('./Technology')
+    const Survey = require('./Survey')
+    const SurveySubmission = require('./SurveySubmission')
 
     return {
       azurecodes: {
@@ -108,6 +106,26 @@ class Hackathon extends Model {
             to: 'hackathons_technologies.technology_id'
           },
           to: 'technologies.id'
+        }
+      },
+      surveys: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Survey,
+        join: {
+          from: 'hackathons.id',
+          through: {
+            from: 'hackathons_surveys.hackathon_id',
+            to: 'hackathons_surveys.survey_id'
+          },
+          to: 'surveys.id'
+        }
+      },
+      survey_submissions: {
+        relation: Model.HasManyRelation,
+        modelClass: SurveySubmission,
+        join: {
+          from: 'hackathons.id',
+          to: 'surveysubmissions.hackathon_id'
         }
       }
     }

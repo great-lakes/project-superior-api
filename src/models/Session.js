@@ -5,8 +5,8 @@ class Session extends Model {
     return 'sessions'
   }
 
-  hackathon (args, {loaders}) {
-    return loaders.hackathon.load(this.hackathon_id)
+  hackathon (args, context) {
+    return this.$relatedQuery('hackathon')
   }
 
   static get relationMappings () {

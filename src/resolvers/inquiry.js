@@ -4,18 +4,15 @@ const Project = require('../models/Project')
 const Mentor = require('../models/Mentor')
 const sendMentorAssignedEmail = require('../support/emails/sendMentorAssignedEmail')
 
-exports.inquiry = ({id}, {loaders}) => loaders.inquiry.load(id)
+exports.inquiry = ({id}, context) => Inquiry.query().findById(id)
 
-exports.setInquiryStatus = ({id, status}, {loaders}) => {
+exports.setInquiryStatus = ({id, status}, context) => {
   return Inquiry
     .query()
     .patchAndFetchById(id, {is_resolved: status === 'RESOLVED'})
-    .then((updatedInquiry) => {
-      return loaders.inquiry.load(updatedInquiry.id)
-    })
 }
 
-exports.setInquiryNotes = ({id, notes}, {loaders}) => {
+exports.setInquiryNotes = ({id, notes}, context) => {
   if (typeof notes === 'undefined') {
     return {error: 'notes is undefined'}
   }
@@ -23,9 +20,6 @@ exports.setInquiryNotes = ({id, notes}, {loaders}) => {
   return Inquiry
     .query()
     .patchAndFetchById(id, {mentor_notes: notes})
-    .then((updatedInquiry) => {
-      return loaders.inquiry.load(updatedInquiry.id)
-    })
 }
 
 const sendEmailIfMentorWasNull = ([inquiry, mentor]) => {
@@ -37,7 +31,7 @@ const sendEmailIfMentorWasNull = ([inquiry, mentor]) => {
   }
 }
 
-exports.setInquiryMentor = ({inquiryId, mentorId}, {loaders}) => {
+exports.setInquiryMentor = ({inquiryId, mentorId}, context) => {
   const getInquiry = Inquiry.query().eager('student').findById(inquiryId)
   const getMentor = Mentor.query().findById(mentorId)
   return Promise.all([getInquiry, getMentor])
@@ -51,10 +45,9 @@ exports.setInquiryMentor = ({inquiryId, mentorId}, {loaders}) => {
         .query()
         .patchAndFetchById(inquiryId, {mentor_id: mentorId})
     })
-    .then((updatedInquiry) => loaders.inquiry.load(updatedInquiry.id))
 }
 
-exports.newInquiry = ({hackathonId, studentName, studentEmail, question}, {loaders}) => {
+exports.newInquiry = ({hackathonId, studentName, studentEmail, question}, context) => {
   return Student
   .findWithEmail(hackathonId, studentEmail)
   .then(student => {
@@ -82,8 +75,5 @@ exports.newInquiry = ({hackathonId, studentName, studentEmail, question}, {loade
           question,
           student_id: student.id
         })
-  })
-  .then(created => {
-    return loaders.inquiry.load(created.id)
   })
 }

@@ -5,17 +5,25 @@ class Student extends Model {
     return 'students'
   }
 
-  project (args, {loaders}) {
-    return loaders.project.load(this.project_id)
+  inquiries (args, context) {
+    return this.$relatedQuery('inquiries')
   }
 
-  inquiries (args, {loaders}) {
-    return this.$relatedQuery('inquiries')
-      .then(inquiries => loaders.inquiry.loadMany(inquiries.map(inq => inq.id)))
+  project (args, context) {
+    return this.$relatedQuery('project')
+  }
+
+  azurecode (args, context) {
+    return this.$relatedQuery('azurecode')
+  }
+
+  survey_submissions (args, context) { // eslint-disable-line camelcase
+    return this.$relatedQuery('survey_submissions')
   }
 
   static findWithEmail (hackathonId, email) {
-    return this.query()
+    console.log(hackathonId, email)
+    return Student.query()
       .eager('project')
       .where({email})
       .then((students) => students.find((student) => student.project.hackathon_id === +hackathonId))
@@ -26,6 +34,8 @@ class Student extends Model {
     const Inquiry = require('./Inquiry')
     const Project = require('./Project')
     const Azurecode = require('./Azurecode')
+    // const Hackathon = require('./Hackathon')
+    const SurveySubmission = require('./SurveySubmission')
 
     return {
       inquiries: {
@@ -50,6 +60,14 @@ class Student extends Model {
         join: {
           from: 'students.id',
           to: 'azurecodes.student_id'
+        }
+      },
+      survey_submissions: {
+        relation: Model.HasManyRelation,
+        modelClass: SurveySubmission,
+        join: {
+          from: 'students.id',
+          to: 'surveysubmissions.student_id'
         }
       }
     }

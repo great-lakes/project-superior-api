@@ -1,12 +1,9 @@
 const Hackathon = require('../models/Hackathon')
 
-exports.hackathon = ({id}, {loaders}) => {
-  return loaders.hackathon.load(id)
+exports.hackathon = ({id}, context) => {
+  return Hackathon.query().findById(id)
 }
 
-exports.hackathons = (args, {loaders}) => {
+exports.hackathons = (args, context) => {
   return Hackathon.query()
-      .then((hackathons) => {
-        return loaders.hackathon.loadMany(hackathons.map(hackathon => hackathon.id))
-      })
 }
